@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Rafiul Islam | Motion Designer & Video Editor</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #ff3366;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: 0.1s ease;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 51, 102, 0.1);
+            backdrop-filter: blur(2px);
+        }
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: #ff3366;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: 0.05s linear;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Particles Background */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            height: 45px;
+            width: 45px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 0 8px rgba(255,51,102,0.3);
+        }
+        .logo span {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #fff, #ff3366);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover { color: #ff3366; }
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 5%;
+            position: relative;
+            z-index: 2;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        .glitch {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 #ff3366, -0.05em -0.025em 0 #00ccff;
+            animation: glitch-shake 0.3s infinite alternate;
+        }
+        @keyframes glitch-shake {
+            0% { transform: translate(0); }
+            100% { transform: translate(-1px, 1px); }
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: #000;
+        }
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+        .typed-text {
+            color: #ff3366;
+            border-right: 2px solid;
+        }
+        .btn-group {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .btn {
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #ff3366;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(255,51,102,0.5);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff3366;
+            background: #ff1a4f;
+        }
+        .btn-outline {
+            border: 2px solid #ff3366;
+            color: #fff;
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: #ff3366;
+            transform: scale(1.05);
+        }
+
+        /* Showreel */
+        .showreel-box {
+            background: #111;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5);
+        }
+        .showreel-box video {
+            width: 100%;
+            display: block;
+        }
+
+        /* Project Gallery Filters */
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .filter-btn {
+            background: #1f1f1f;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: #ff3366;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .project-card {
+            background: #151515;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.4s;
+            cursor: pointer;
+            transform: scale(1);
+        }
+        .project-card:hover {
+            transform: scale(1.03) translateY(-8px);
+            box-shadow: 0 20px 30px rgba(255,51,102,0.2);
+        }
+        .project-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        .project-info {
+            padding: 1rem;
+        }
+
+        /* Video Upload Grid */
+        .video-upload-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .video-card {
+            background: #111;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .video-card video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-card h4 {
+            padding: 12px;
+        }
+
+        /* Masonry Gallery */
+        .masonry {
+            column-count: 3;
+            column-gap: 20px;
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+        .masonry-item img {
+            width: 100%;
+            display: block;
+            transition: 0.4s;
+        }
+        .masonry-item:hover img {
+            transform: scale(1.05);
+            filter: blur(3px);
+        }
+        .masonry-item:hover::after {
+            content: "🔍 View";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        /* Skills */
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+        }
+        .progress-bar {
+            background: #2a2a2a;
+            height: 12px;
+            border-radius: 10px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff3366, #ff8c66);
+            border-radius: 10px;
+            transition: 1.2s ease;
+        }
+
+        /* Contact Form */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .contact-info i {
+            margin-right: 12px;
+            color: #ff3366;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .contact-form button {
+            background: #ff3366;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Chat Page (hidden by default) */
+        .chat-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 2000;
+            padding-top: 80px;
+            overflow-y: auto;
+        }
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #111;
+            border-radius: 30px;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.2s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px);}
+            to { opacity: 1; transform: translateX(0);}
+        }
+        .bot-message .bubble {
+            background: #1f1f1f;
+            border-radius: 20px 20px 20px 5px;
+        }
+        .user-message {
+            justify-content: flex-end;
+        }
+        .user-message .bubble {
+            background: #ff3366;
+            border-radius: 20px 20px 5px 20px;
+        }
+        .bubble {
+            padding: 12px 18px;
+            max-width: 70%;
+        }
+        .typing {
+            font-style: italic;
+            color: #aaa;
+        }
+        .quick-buttons {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            flex-wrap: wrap;
+            background: #0a0a0a;
+        }
+        .quick-btn {
+            background: #2a2a2a;
+            padding: 6px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 16px;
+            background: #1a1a1a;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 40px;
+            border: none;
+            background: #2a2a2a;
+            color: white;
+        }
+        .close-chat {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #111;
+            max-width: 800px;
+            width: 90%;
+            border-radius: 24px;
+            padding: 20px;
+            animation: scaleFade 0.3s;
+        }
+        @keyframes scaleFade {
+            from { transform: scale(0.8); opacity: 0;}
+            to { transform: scale(1); opacity: 1;}
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .hero h1 { font-size: 2.2rem; }
+            .masonry { column-count: 2; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #050505;
+        }
+        .admin-panel {
+            margin-top: 20px;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        .hidden-upload { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="custom-cursor"></div>
+<div class="cursor-dot"></div>
+<canvas id="particles-canvas"></canvas>
+
+<nav>
+    <div class="logo">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ff3366'/%3E%3Ctext x='20' y='65' fill='white' font-size='45' font-weight='bold'%3ER%3C/text%3E%3C/svg%3E" alt="Logo">
+        <span>Rafiul</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#showreel">Showreel</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#video-upload">Video Hub</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#" id="openChatBtn">Chat AI</a></li>
+    </ul>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-futuristic-interface-2251-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+        <h1><span class="typed-text"></span></h1>
+        <div class="btn-group">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="#contact" class="btn btn-outline">Hire Me</a>
+        </div>
+    </div>
+</section>
+
+<!-- Showreel -->
+<section id="showreel">
+    <div class="container">
+        <h2 class="glitch">★ My Best Showreel ★</h2>
+        <div class="showreel-box">
+            <video id="showreelVideo" controls poster="https://via.placeholder.com/1280x720/222?text=Showreel">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Portfolio -->
+<section id="projects">
+    <div class="container">
+        <h2>Creative Portfolio</h2>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-cat="all">All</button>
+            <button class="filter-btn" data-cat="motion">Motion Graphics</button>
+            <button class="filter-btn" data-cat="editing">Video Editing</button>
+            <button class="filter-btn" data-cat="social">Social Media Ads</button>
+            <button class="filter-btn" data-cat="reels">Reels / TikTok</button>
+        </div>
+        <div class="projects-grid" id="projectsGrid"></div>
+    </div>
+</section>
+
+<!-- Video Upload Section (Admin Control) -->
+<section id="video-upload">
+    <div class="container">
+        <h2>🎥 Interactive Video Gallery</h2>
+        <p>Hover on videos → autoplay & loop</p>
+        <div class="video-upload-grid" id="videoGalleryGrid"></div>
+        <!-- Admin upload unlock -->
+        <div class="admin-panel">
+            <button id="adminUnlockBtn" class="btn btn-outline"><i class="fas fa-lock"></i> Admin Upload (Unlock)</button>
+            <div id="uploadFormPanel" class="hidden-upload" style="margin-top: 20px;">
+                <input type="text" id="videoTitle" placeholder="Video Title" style="background:#222; color:white; padding:10px; width:100%; margin-bottom:10px;">
+                <input type="text" id="videoDesc" placeholder="Description" style="background:#222; color:white; padding:10px; width:100%; margin-bottom:10px;">
+                <input type="file" id="videoFile" accept="video/mp4,video/webm" style="margin-bottom:10px;">
+                <button id="uploadVideoBtn" class="btn btn-primary">Upload New Video</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Photo Gallery Masonry -->
+<section id="gallery">
+    <div class="container">
+        <h2>📸 Visual Stories</h2>
+        <div class="masonry" id="masonryGallery"></div>
+    </div>
+</section>
+
+<!-- About + Skills -->
+<section id="about">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div>
+                <h2>About Me</h2>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Ccircle cx='150' cy='150' r='140' fill='%23ff3366'/%3E%3Ctext x='70' y='170' fill='white' font-size='32'%3ERafiul%3C/text%3E%3C/svg%3E" style="width: 150px; border-radius: 50%; margin-bottom: 20px;">
+                <p style="font-size:1.2rem">I'm Rafiul Islam, a passionate Motion Designer & Video Editor with 5+ years of crafting stunning visuals, dynamic edits, and viral content. I transform ideas into cinematic stories.</p>
+            </div>
+            <div>
+                <h2>Skills</h2>
+                <div id="skillsContainer"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social + Contact -->
+<section id="contact">
+    <div class="container">
+        <h2>Let's Connect</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <p><i class="fas fa-phone"></i> 01706618947</p>
+                <p><i class="fas fa-envelope"></i> rafiulislamrupom11@gmail.com</p>
+                <div style="margin-top: 20px;">
+                    <a href="https://www.facebook.com/profile.php?id=61574862845580" target="_blank" style="color:white; margin-right:15px;"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="https://x.com/rafiul_rup34054" target="_blank" style="color:white; margin-right:15px;"><i class="fab fa-twitter fa-2x"></i></a>
+                    <a href="https://www.linkedin.com/in/md-rafiul-islam-rupom-763594394/" target="_blank" style="color:white; margin-right:15px;"><i class="fab fa-linkedin fa-2x"></i></a>
+                    <a href="https://www.instagram.com/md.rafiulrupam/" target="_blank" style="color:white; margin-right:15px;"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="https://www.tiktok.com/@itsmerupamhere" target="_blank" style="color:white;"><i class="fab fa-tiktok fa-2x"></i></a>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Email" required>
+                <textarea rows="4" placeholder="Message"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>© 2025 Rafiul Islam - Motion Designer & Video Editor</footer>
+
+<!-- Chat Page (Gemini AI) -->
+<div id="chatPage" class="chat-page">
+    <div class="close-chat" id="closeChatBtn">&times;</div>
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message"><div class="bubble">✨ Hello! I'm Gemini AI, Rafiul's assistant. Ask me about services, portfolio, or contact info! ✨</div></div>
+        </div>
+        <div class="quick-buttons" id="quickBtns">
+            <div class="quick-btn" data-msg="Tell me about your services">Services</div>
+            <div class="quick-btn" data-msg="Show portfolio examples">Portfolio</div>
+            <div class="quick-btn" data-msg="Hire Me">Hire Me</div>
+            <div class="quick-btn" data-msg="Contact Info">Contact Info</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ask Gemini...">
+            <button id="sendChatBtn" style="background:#ff3366; border:none; padding:0 15px; border-radius:40px;">Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Popup -->
+<div id="projectModal" class="modal"><div class="modal-content" id="modalContent"></div></div>
+<div id="lightboxModal" class="modal"><img id="lightboxImg" style="max-width:90%; max-height:90%;"></div>
+
+<script>
+    // ---------- DATA ----------
+    const projectsData = [
+        { title: "Kinetic Typography", category: "motion", thumb: "https://picsum.photos/id/20/400/225", video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", desc: "Motion Graphics animation" },
+        { title: "Corporate Edit", category: "editing", thumb: "https://picsum.photos/id/26/400/225", video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFunflies.mp4", desc: "Professional video editing" },
+        { title: "Instagram Ad - Sneakers", category: "social", thumb: "https://picsum.photos/id/1/400/225", video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4", desc: "High conversion ad" },
+        { title: "TikTok Viral Edit", category: "reels", thumb: "https://picsum.photos/id/29/400/225", video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4", desc: "Fast paced reels" },
+        { title: "Logo Animation", category: "motion", thumb: "https://picsum.photos/id/13/400/225", video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4", desc: "3D logo motion" }
+    ];
+    let videosArray = []; // uploaded video objects
+    // sample init videos
+    const sampleVideos = [
+        { title: "Showreel 2024", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
+        { title: "Motion Reel", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFunflies.mp4" }
+    ];
+    
+    function renderProjects(filter = "all") {
+        const grid = document.getElementById("projectsGrid");
+        const filtered = filter === "all" ? projectsData : projectsData.filter(p => p.category === filter);
+        grid.innerHTML = filtered.map(p => `
+            <div class="project-card" data-video="${p.video}" data-title="${p.title}" data-desc="${p.desc}">
+                <img class="project-thumb" src="${p.thumb}" alt="${p.title}">
+                <div class="project-info"><h3>${p.title}</h3><p>${p.desc}</p></div>
+            </div>
+        `).join('');
+        document.querySelectorAll(".project-card").forEach(card => {
+            card.addEventListener("click", () => {
+                const vid = card.dataset.video, title = card.dataset.title, desc = card.dataset.desc;
+                document.getElementById("modalContent").innerHTML = `<video controls autoplay style="width:100%; border-radius:16px;"><source src="${vid}" type="video/mp4"></video><h3>${title}</h3><p>${desc}</p><button id="closeModalBtn" class="btn btn-primary">Close</button>`;
+                document.getElementById("projectModal").style.display = "flex";
+                document.getElementById("closeModalBtn").onclick = () => document.getElementById("projectModal").style.display = "none";
+            });
+        });
+    }
+
+    // Video gallery render (autoplay hover)
+    function renderVideoGallery() {
+        const container = document.getElementById("videoGalleryGrid");
+        container.innerHTML = videosArray.map((v, idx) => `
+            <div class="video-card">
+                <video loop muted preload="metadata" poster="https://via.placeholder.com/300x200?text=video">
+                    <source src="${v.url}" type="video/mp4">
+                </video>
+                <h4>${v.title}</h4><p>${v.desc || ''}</p>
+            </div>
+        `).join('');
+        // Attach hover autoplay
+        document.querySelectorAll(".video-card video").forEach(vid => {
+            vid.addEventListener("mouseenter", () => vid.play().catch(e=>console.log));
+            vid.addEventListener("mouseleave", () => { vid.pause(); vid.currentTime = 0; });
+        });
+    }
+
+    // Masonry Gallery (Images)
+    const galleryImages = [
+        "https://picsum.photos/id/101/400/500", "https://picsum.photos/id/104/400/300", "https://picsum.photos/id/107/400/400",
+        "https://picsum.photos/id/116/400/450", "https://picsum.photos/id/20/400/350", "https://picsum.photos/id/22/400/600"
+    ];
+    function renderMasonry() {
+        const masonDiv = document.getElementById("masonryGallery");
+        masonDiv.innerHTML = galleryImages.map(img => `<div class="masonry-item"><img src="${img}" alt="gallery"></div>`).join('');
+        document.querySelectorAll(".masonry-item").forEach(item => {
+            item.addEventListener("click", () => {
+                document.getElementById("lightboxImg").src = item.querySelector("img").src;
+                document.getElementById("lightboxModal").style.display = "flex";
+            });
+        });
+    }
+
+    // Skills Progress bars animation
+    const skillsList = ["Adobe After Effects", "Adobe Premiere Pro", "CapCut", "Motion Graphics", "Color Grading"];
+    const skillPercent = [95, 90, 85, 92, 88];
+    function renderSkills() {
+        const skillContainer = document.getElementById("skillsContainer");
+        skillContainer.innerHTML = skillsList.map((s,i)=>`<div class="skill-item"><div class="skill-name"><span>${s}</span><span>${skillPercent[i]}%</span></div><div class="progress-bar"><div class="progress-fill" data-width="${skillPercent[i]}"></div></div></div>`).join('');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.width = entry.target.dataset.width + "%";
+                }
+            });
+        }, {threshold:0.5});
+        document.querySelectorAll(".progress-fill").forEach(p => { observer.observe(p); });
+    }
+
+    // Typing effect
+    function typeEffect() {
+        const text = "Hi, I'm Rafiul Islam – Motion Designer & Video Editor";
+        let i = 0;
+        const el = document.querySelector(".typed-text");
+        function typing() { if(i<text.length) { el.innerHTML += text.charAt(i); i++; setTimeout(typing, 50); } }
+        typing();
+    }
+
+    // Gemini AI mock
+    function geminiReply(msg) {
+        const lowerMsg = msg.toLowerCase();
+        if(lowerMsg.includes("service") || lowerMsg.includes("offer")) return "🎬 I offer Motion Graphics, Video Editing, Social Media Ads, Reels, Color Grading, and full post-production!";
+        if(lowerMsg.includes("portfolio") || lowerMsg.includes("show")) return "🎥 Check out the Projects section: motion graphics, viral edits, corporate videos. All crafted with passion!";
+        if(lowerMsg.includes("hire") || lowerMsg.includes("price")) return "💼 To hire Rafiul, please use the contact form or email rafiulislamrupom11@gmail.com. He's available for freelance & full-time!";
+        if(lowerMsg.includes("contact") || lowerMsg.includes("phone")) return "📞 Phone: 01706618947 | Email: rafiulislamrupom11@gmail.com | Social links in Contact section.";
+        return "✨ I can help you with portfolio info, services, or contact details. Would you like to see Rafiul's showreel?";
+    }
+
+    // Chat UI logic
+    let isTyping = false;
+    function addMessage(text, isUser) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${isUser ? "user-message" : "bot-message"}`;
+        msgDiv.innerHTML = `<div class="bubble">${text}</div>`;
+        document.getElementById("chatMessages").appendChild(msgDiv);
+        msgDiv.scrollIntoView({ behavior: "smooth" });
+    }
+    async function botResponse(userMsg) {
+        addMessage("Gemini is typing...", false);
+        await new Promise(r => setTimeout(r, 800));
+        document.querySelector(".chat-messages .bot-message:last-child .bubble").remove();
+        const reply = geminiReply(userMsg);
+        addMessage(reply, false);
+    }
+    function handleChatSend() {
+        const input = document.getElementById("chatInput");
+        const msg = input.value.trim();
+        if(!msg) return;
+        addMessage(msg, true);
+        input.value = "";
+        botResponse(msg);
+    }
+
+    // Video Upload Admin
+    let adminUnlocked = false;
+    document.getElementById("adminUnlockBtn").onclick = () => {
+        const pwd = prompt("Admin Access: Enter code");
+        if(pwd === "admin123") {
+            adminUnlocked = true;
+            document.getElementById("uploadFormPanel").classList.remove("hidden-upload");
+            alert("Upload mode unlocked");
+        } else alert("Wrong code");
+    };
+    document.getElementById("uploadVideoBtn")?.addEventListener("click", () => {
+        if(!adminUnlocked) { alert("Unlock admin first!"); return; }
+        const file = document.getElementById("videoFile").files[0];
+        const title = document.getElementById("videoTitle").value;
+        const desc = document.getElementById("videoDesc").value;
+        if(file && title) {
+            const url = URL.createObjectURL(file);
+            videosArray.push({ title, desc, url });
+            renderVideoGallery();
+            document.getElementById("videoTitle").value = "";
+            document.getElementById("videoDesc").value = "";
+            document.getElementById("videoFile").value = "";
+        } else alert("Enter title and video file");
+    });
+
+    // Cursor & Particles
+    const cursor = document.querySelector(".custom-cursor");
+    const dot = document.querySelector(".cursor-dot");
+    document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+    });
+    // Particles
+    const canvas = document.getElementById("particles-canvas");
+    const ctx = canvas.getContext("2d");
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    let particles = [];
+    for(let i=0;i<70;i++) particles.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, radius:Math.random()*3+1, dx:(Math.random()-0.5)*0.6, dy:(Math.random()-0.5)*0.4 });
+    function animateParticles() {
+        if(!ctx) return;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "#ff3366";
+        particles.forEach(p => {
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2); ctx.fill();
+            p.x += p.dx; p.y += p.dy;
+            if(p.x<0||p.x>canvas.width) p.dx*=-1;
+            if(p.y<0||p.y>canvas.height) p.dy*=-1;
+        });
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // page load animation (fake)
+    window.addEventListener("load", () => {
+        typeEffect();
+        renderProjects();
+        renderSkills();
+        renderMasonry();
+        videosArray.push(...sampleVideos.map(v => ({ ...v, desc: "Demo reel", url: v.url })));
+        renderVideoGallery();
+        // scroll animations (fade-up)
+        const faders = document.querySelectorAll("section");
+        const appearOptions = { threshold: 0.1 };
+        const appearOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.style.opacity = "1"; else entry.target.style.opacity = "0"; });
+        }, appearOptions);
+        faders.forEach(s => { s.style.transition = "opacity 0.8s"; appearOnScroll.observe(s); });
+        // parallax simple
+        window.addEventListener("scroll", () => {
+            const scrolled = window.scrollY;
+            document.querySelectorAll(".bg-video").forEach(bg => { if(bg) bg.style.transform = `translateY(${scrolled*0.2}px)`; });
+        });
+    });
+    // Filter buttons
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+            document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+            this.classList.add("active");
+            renderProjects(this.dataset.cat);
+        });
+    });
+    // Lightbox close
+    document.getElementById("lightboxModal").addEventListener("click", () => document.getElementById("lightboxModal").style.display = "none");
+    document.getElementById("projectModal").addEventListener("click", (e) => { if(e.target === document.getElementById("projectModal")) document.getElementById("projectModal").style.display = "none"; });
+    // Chat open/close
+    document.getElementById("openChatBtn").addEventListener("click", () => document.getElementById("chatPage").style.display = "block");
+    document.getElementById("closeChatBtn").addEventListener("click", () => document.getElementById("chatPage").style.display = "none");
+    document.getElementById("sendChatBtn").addEventListener("click", handleChatSend);
+    document.getElementById("chatInput").addEventListener("keypress", e => { if(e.key === "Enter") handleChatSend(); });
+    document.querySelectorAll(".quick-btn").forEach(q => q.addEventListener("click", () => {
+        const msg = q.dataset.msg;
+        addMessage(msg, true);
+        botResponse(msg);
+    }));
+    // Contact form alert
+    document.getElementById("contactForm").addEventListener("submit", (e) => { e.preventDefault(); alert("Thank you! Rafiul will reach out soon."); });
+    // mobile menu toogle
+    document.querySelector(".menu-toggle").addEventListener("click", () => {
+        document.querySelector(".nav-links").style.display = document.querySelector(".nav-links").style.display === "flex" ? "none" : "flex";
+    });
+</script>
+</body>
+</html>
